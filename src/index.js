@@ -75,14 +75,19 @@ addProjectButton.addEventListener("click", () => {
   addProjectPanelOpen = !addProjectPanelOpen
 
   if (addProjectPanelOpen) {
-    console.log("hello")
     projectsPanel.style.zIndex = 1
-    backgroundDarken.classList.remove("hidden")
+    backgroundDarken.style.width = "100vw"
+    backgroundDarken.style.opacity = "0.8"
     addProjectPanel.classList.remove("hidden")
   } else {
-    console.log("world")
-    projectsPanel.style.zIndex = 0
-    backgroundDarken.classList.add("hidden")
+    delay(700).then(() => {
+      ;(projectsPanel.style.zIndex = 0), (backgroundDarken.style.width = "0vw")
+    })
+    backgroundDarken.style.opacity = "0"
     addProjectPanel.classList.add("hidden")
   }
 })
+
+function delay(time) {
+  return new Promise((resolve) => setTimeout(resolve, time))
+}
