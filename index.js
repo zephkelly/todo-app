@@ -80,7 +80,7 @@ addProjectButton.addEventListener("click", () => {
     backgroundDarken.style.opacity = "0.8"
     addProjectPanel.classList.remove("hidden")
   } else {
-    delay(700).then(() => {
+    delay(300).then(() => {
       ;(projectsPanel.style.zIndex = 0), (backgroundDarken.style.width = "0vw")
     })
     backgroundDarken.style.opacity = "0"

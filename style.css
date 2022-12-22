@@ -7,7 +7,7 @@
   background-color: rgb(0, 0, 0);
   opacity: 0;
   transition-property: opacity;
-  transition-duration: 0.5s;
+  transition-duration: 0.3s;
   transition-timing-function: ease-in-out;
   position: absolute;
   top: 0;
@@ -52,6 +52,24 @@ main {
 .panel * {
   font-family: "Ubuntu", sans-serif;
 }
+  .content {
+    height: 100%;
+    padding: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .wrapper {
+    height: 100%;
+    width: 100%;
+  }
+
+  .projects-panel * {
+    font-family: "Ubuntu", sans-serif;
+  }
 
 .projects-panel {
   position: relative;
@@ -75,6 +93,12 @@ main {
   z-index: 1;
 }
 
+  .add-project label {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;;
+    display: inline-block;
+  }
+
   .content {
     height: 85%;
     padding: 2rem;
@@ -89,27 +113,37 @@ main {
     margin-top: 0.5rem;
   }
 
-    .label {
-      font-size: 1.6rem;
-      font-weight: 400;
-      width: 100%;
-      margin: 0;
-      padding-bottom: 1rem;
-      text-align: left;
+  .label {
+    font-size: 1.6rem;
+    font-weight: 400;
+    width: 100%;
+    margin: 0;
+    padding-bottom: 1rem;
+    text-align: left;
+  }
+
+  .text-input {
+    border: none;
+    border-bottom: solid;
+    border-width: 0.2rem;
+    border-color: var(--obsidian-background);
+    height: 1rem;
+  }
+
+    .add-project .text-input {
+      transition: height 0.1s ease-in-out;
+      width: 12rem;
     }
 
-    .text-input {
-      width: 4rem;
-      height: 1.6rem;
-      border: none;
-      border-bottom: solid;
-      border-width: 0.2rem;
-      border-color: var(--obsidian-background);
-    }
-
-      .add-project em {
-        padding-top: 3rem;
-      }
+  .text-input:focus {
+    border: solid;
+    border-radius: 1rem;
+    border-width: 0.2rem;
+    border-color: var(--obsidian-background);
+    outline: none;
+    height: 1.5rem;
+    padding-left: 0.6rem;
+  }
 
     .spacer {
       height: 0.2rem;
