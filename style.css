@@ -1,0 +1,90 @@
+:root {
+  --obsidian-background: #7209b7;
+  --obsidian-panel-background: #ffffff;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background-color: var(--obsidian-background);
+}
+
+main {
+  width: 100%;
+  height: 92vh;
+  min-height: 30rem;
+  display: flex;
+  flex-direction: row;
+  border-top-left-radius: 4rem;
+  background-color: var(--obsidian-panel-background);
+}
+
+#header {
+  width: 100%;
+  height: 8vh;
+  min-height: 4rem;
+}
+
+.projects-panel {
+  position: relative;
+  left: 5rem;
+  top: 5rem;
+  height: 50vh;
+  min-height: 20rem;
+  width: 20%;
+  background-color: var(--obsidian-panel-background);
+  box-shadow: 0rem 0rem 6rem rgba(64, 68, 201, 0.2);
+  border-radius: 2rem;
+}
+
+.content {
+  height: 100%;
+  padding: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.projects-panel * {
+  font-family: "Ubuntu", sans-serif;
+}
+
+#projects-label {
+  font-size: 1.6rem;
+  font-weight: 400;
+  width: 100%;
+  margin: 0;
+  padding-bottom: 1rem;
+  text-align: left;
+}
+
+.spacer {
+  height: 0.2rem;
+  border-radius: 2rem;
+  width: 100%;
+  background-color: var(--obsidian-background);
+}
+
+#btn-new-project {
+  margin-top: 0.5rem;
+  text-align: left;
+  font-weight: 500;
+  font-size: 1rem;
+  opacity: 0.5;
+  background-color: transparent;
+  border: none;
+  height: 2rem;
+  width: 8rem;
+}
+
+#btn-new-project:hover {
+  opacity: 1;
+  cursor: pointer;
+}
