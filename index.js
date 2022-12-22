@@ -1,5 +1,5 @@
-import { compareAsc, format } from "date-fns"
-import "./style.css"
+//import { compareAsc, format } from "date-fns"
+//import "./style.css"
 
 const projectsList = document.getElementById("projects-list")
 const todoPanel = document.getElementById("todo-panel")
@@ -62,7 +62,27 @@ const render = () => {}
 
 const init = () => {}
 
-iwindow.onload = () => nit()
-
 //DOM interaction
+const backgroundDarken = document.querySelector(".background-darken")
+//Project panel
 const addProjectButton = document.getElementById("btn-new-project")
+const projectsPanel = document.querySelector(".projects-panel")
+const addProjectPanel = document.querySelector(".add-project")
+
+let addProjectPanelOpen = false
+
+addProjectButton.addEventListener("click", () => {
+  addProjectPanelOpen = !addProjectPanelOpen
+
+  if (addProjectPanelOpen) {
+    console.log("hello")
+    projectsPanel.style.zIndex = 1
+    backgroundDarken.classList.remove("hidden")
+    addProjectPanel.classList.remove("hidden")
+  } else {
+    console.log("world")
+    projectsPanel.style.zIndex = 0
+    backgroundDarken.classList.add("hidden")
+    addProjectPanel.classList.add("hidden")
+  }
+})

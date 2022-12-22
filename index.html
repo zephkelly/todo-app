@@ -11,16 +11,18 @@
       href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="style.css" />
     <title>To.do</title>
   </head>
   <body>
+    <div class="background-darken hidden"></div>
     <header>
       <div id="header"></div>
     </header>
     <main>
-      <div class="projects-panel">
+      <div class="projects-panel panel">
         <div class="content">
-          <h2 id="projects-label">Your Projects</h2>
+          <h2 id="projects-label" class="label">Your Projects</h2>
           <div class="spacer"></div>
           <div class="wrapper">
             <nav>
@@ -29,6 +31,15 @@
           </div>
         </div>
       </div>
+      <div class="add-project panel hidden">
+        <div class="content">
+          <h2 class="label">Name your project</h2>
+          <div class="spacer"></div>
+        </div>
+      </div>
     </main>
+    <footer>
+      <script src="index.js"></script>
+    </footer>
   </body>
 </html>
