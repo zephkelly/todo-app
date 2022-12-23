@@ -1,15 +1,11 @@
 :root {
+  --accent-color: #7209b7;
+  --panel-color: #ffffff;
+
   --obsidian-accent-1: #7209b7;
-  --obsidian-panel: #ffffff;
-
   --sunflower-accent-1: #f7b731;
-  --sunflower-panel: #ffffff;
-
   --forest-accent-1: #0f9960;
-  --forest-panel: #ffffff;
-
   --ocean-accent-1: #3a86ff;
-  --ocean-panel: #ffffff;
 }
 
 .background-darken {
@@ -35,7 +31,7 @@ body {
   margin: 0;
   height: 100vh;
   min-height: 40rem;
-  background-color: var(--obsidian-accent-1);
+  background-color: var(--accent-color);
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
@@ -43,11 +39,11 @@ body {
 
 main {
   width: 100%;
-height: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   border-top-left-radius: 4rem;
-  background-color: var(--obsidian-panel);
+  background-color: var(--panel-color);
 }
 
 #header {
@@ -57,9 +53,19 @@ height: 100%;
 }
 
 .panel {
-  background-color: var(--obsidian-panel);
+  background-color: var(--panel-color);
   box-shadow: 0rem 0rem 6rem rgba(64, 68, 201, 0.2);
   border-radius: 2rem;
+}
+
+.panel-inverted {
+  background-color: var(--panel-color);
+  box-shadow: inset 0rem 0rem 5rem rgba(175, 185, 242, 0.1);
+  border-radius: 2rem;
+}
+
+.panel-inverted * {
+  font-family: "Ubuntu", sans-serif;
 }
 
 .panel * {
@@ -90,15 +96,15 @@ height: 100%;
   top: 5rem;
   height: 50vh;
   min-height: 26rem;
-  min-width: 18.5rem;
+  min-width: 23rem;
   width: 20%;
   z-index: 0;
 }
 
 .add-project {
-  position: relative;
-  left: 9rem;
-  top: 5rem;
+  position: fixed;
+  left: 34rem;
+  top: 9.5rem;
   height: 50vh;
   min-height: 26rem;
   min-width: 30rem;
@@ -150,7 +156,7 @@ height: 100%;
     transition: width 0.1s ease-in-out;
     transition: height 0.02s ease-in-out;
     border: solid 0.2rem;
-    border-color: var(--obsidian-panel);
+    border-color: var(--panel-color);
     border-radius: 2rem;
     box-shadow: 0rem 0rem 2rem 0rem rgba(53, 53, 53, 0.4);
     display: flex;
@@ -217,7 +223,7 @@ height: 100%;
     border: none;
     border-bottom: solid;
     border-width: 0.2rem;
-    border-color: var(--obsidian-accent-1);
+    border-color: var(--accent-color);
     height: 1rem;
   }
 
@@ -230,7 +236,7 @@ height: 100%;
 
   .text-input:focus {
     border-width: 0.4rem;
-    border-color: var(--obsidian-accent-1);
+    border-color: var(--accent-color);
     outline: none;
     height: 1.5rem;
     padding-left: 0.6rem;
@@ -240,7 +246,7 @@ height: 100%;
       height: 0.2rem;
       border-radius: 2rem;
       width: 100%;
-      background-color: var(--obsidian-accent-1);
+      background-color: var(--accent-color);
     }
 
   .projects-panel nav {
@@ -265,6 +271,7 @@ height: 100%;
     max-height: 2rem;
     margin-bottom: 0.5rem;
     transition: margin-left 0.05s ease-in-out;
+    cursor: pointer;
   }
 
     #projects-list h3 {
@@ -289,6 +296,9 @@ height: 100%;
       max-width: 14rem;
     }
 
+    .project-list-item:hover {
+      color: var(--accent-color);
+    }
 
 #btn-new-project {
   text-align: left;
@@ -334,7 +344,7 @@ height: 100%;
   border: none;
   border-radius: 0.5rem;
   opacity: 0.9;
-  background-color: var(--obsidian-panel);
+  background-color: var(--panel-color);
   box-shadow: 0rem 0rem 2rem rgba(127, 39, 156, 0.2);
 }
 
@@ -368,7 +378,27 @@ height: 100%;
     top: 2.4rem;
   }
 
-@media (max-width: 1530px) {
+  .empty-project-panel {
+    width: 68vw;
+    min-width: 80rem;
+    height: 40rem;
+    position: relative;
+    top: 5rem;
+    left: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .empty-project-panel h2 {
+    font-size: 5rem;
+    font-weight: 300;
+    margin: 0;
+    opacity: 0.05;
+    margin-bottom: 8rem;
+  }
+
+@media (max-width: 1450px) {
   #form-add-project .form-item:last-child {
     flex-direction: column;
     justify-content: space-between;

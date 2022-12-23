@@ -11,6 +11,10 @@ class Project {
     this.todos = []
   }
 
+  getTheme() {
+    return this.theme.toString()
+  }
+
   addTodo(newTodo) {
     this.todos.push(newTodo)
   }
@@ -58,6 +62,11 @@ backgroundDarken.addEventListener("click", () => {
 })
 
 //Project panel ----------------------------------------------------------------
+const obsidianThemeHex = '#7209b7'
+const forestThemeHex = '#0f9960'
+const oceanThemeHex = '#3a86ff'
+const sunflowerThemeHex = '#f7b731'
+
 const addProjectButton = document.getElementById("btn-new-project")
 const projectsPanel = document.querySelector(".projects-panel")
 const projectsList = document.getElementById("projects-list")
@@ -90,16 +99,13 @@ let editingProjects = false
 editProjectsListButton.addEventListener("click", () => {
   editingProjects = !editingProjects
   
-  if (editingProjects) {
-    domProjects.forEach((project) => {
+  domProjects.forEach((project) => {
+    if (editingProjects) {
       project.style.marginLeft = "2rem"
-    })
-  }
-  else {
-    domProjects.forEach((project) => {
+    } else {
       project.style.marginLeft = "0rem"
-    })
-  }
+    } 
+  })
 })
 
 createProjectButton.addEventListener("click", () => {
@@ -115,12 +121,13 @@ createProjectButton.addEventListener("click", () => {
   closeCreateProjectPanel()
 
   renderProjectsList()
+  addClickEventToProjects()
 })
 
 themeSelectionButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    themeSelectionButtons.forEach((button) => {
-      button.classList.remove("theme-selected")
+    themeSelectionButtons.forEach((b) => {
+      b.classList.remove("theme-selected")
     })
     button.classList.add("theme-selected")
     themeSelection = button.id
@@ -212,8 +219,37 @@ function renderProjectsList() {
   })
 }
 
-//Project panel ----------------------------------------------------------------
+function addClickEventToProjects() {
+  domProjects.forEach((project) => {
+    project.addEventListener("click", () => {
+      const projectName = project.id.split('_')[0]
+      const selectedProject = projects.find((project) => project.name === projectName)
 
+      
+      openProject(selectedProject)
+    })
+  })
+}
+
+function setThemeColor(theme) {
+  switch (theme) {
+    case "obsidian":
+      return obsidianThemeHex
+    case "forest":
+      return forestThemeHex
+    case "ocean":
+      return oceanThemeHex
+    case "sunflower":
+      return sunflowerThemeHex
+  }
+}
+
+function openProject(project) {
+  document.documentElement.style.setProperty('--accent-color', setThemeColor(project.getTheme()));
+  document.getElementById('empty-project-panel').classList.remove('panel-inverted')
+  document.getElementById('empty-project-panel').classList.add('panel')
+}
+//Project panel ----------------------------------------------------------------
 
 function delay(time) {
   return new Promise((resolve) => setTimeout(resolve, time))
