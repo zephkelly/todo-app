@@ -2,10 +2,14 @@
   --obsidian-accent-1: #7209b7;
   --obsidian-panel: #ffffff;
 
-  --sun-yellow: #f7b731;
-  --sun-panel-background: #f7b731;
+  --sunflower-accent-1: #f7b731;
+  --sunflower-panel: #ffffff;
 
+  --forest-accent-1: #0f9960;
+  --forest-panel: #ffffff;
 
+  --ocean-accent-1: #3a86ff;
+  --ocean-panel: #ffffff;
 }
 
 .background-darken {
@@ -16,8 +20,10 @@
   transition-timing-function: ease-in-out;
   position: absolute;
   top: 0;
+  left: 0;
   width: 0vw;
   height: 100vh;
+  min-height: 40rem;
   z-index: 1;
 }
 
@@ -28,14 +34,16 @@
 body {
   margin: 0;
   height: 100vh;
+  min-height: 40rem;
   background-color: var(--obsidian-accent-1);
-  overflow: hidden;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
   width: 100%;
-  height: 92vh;
-  min-height: 30rem;
+height: 100%;
   display: flex;
   flex-direction: row;
   border-top-left-radius: 4rem;
@@ -133,10 +141,10 @@ main {
     margin-left: 3rem;
     height: 2rem;
     width: 60%;
+    max-width: 20rem;
   }
 
-  .color-selector {
-      background-color: var(--obsidian-accent-1);
+  #form-add-project .themes .color-selector {
       height: 2rem;
       width: 2rem;
       transition: width 0.1s ease-in-out;
@@ -150,16 +158,33 @@ main {
       justify-content: center;
     }
 
-    .color-selector:hover {
+    #form-add-project .themes .color-selector:hover {
       cursor: pointer;
       width: 2.4rem;
       height: 2.4rem;
     }
 
-    .color-selector:active {
+    #form-add-project .themes .color-selector:active {
       width: 2.2rem;
       height: 2.2rem;
     }
+
+    #form-add-project .wrapper-color-selector:nth-child(1) .color-selector {
+      background-color: var(--obsidian-accent-1);
+    }
+
+    #form-add-project .wrapper-color-selector:nth-child(2) .color-selector {
+      background-color: var(--sunflower-accent-1);
+    }
+
+    #form-add-project .wrapper-color-selector:nth-child(3) .color-selector {
+      background-color: var(--forest-accent-1);
+    }
+
+    #form-add-project .wrapper-color-selector:nth-child(4) .color-selector {
+      background-color: var(--ocean-accent-1);
+    }
+
   
   .content {
     height: 85%;
@@ -196,6 +221,7 @@ main {
       transition: padding-left 0.1s ease-in-out;
       transition: height 0.1s ease-in-out;
       width: 12vw;
+      min-width: 10rem;
     }
 
   .text-input:focus {
