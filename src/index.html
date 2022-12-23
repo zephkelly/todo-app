@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <title>To.do</title>
   </head>
   <body>
@@ -22,10 +22,14 @@
     <main>
       <div class="projects-panel panel">
         <div class="content">
+          <span class="material-symbols-outlined" id="projects-edit-btn">more_horiz</span>
           <h2 id="projects-label" class="label">Your Projects</h2>
           <div class="spacer"></div>
           <div class="wrapper">
             <nav>
+              <ul id="projects-list">
+
+              </ul>
               <button type="button" id="btn-new-project">+ Add New</button>
             </nav>
           </div>
@@ -59,21 +63,22 @@
                 <label for="input-project-theme">Theme</label>
                 <div class="themes">
                   <div class="wrapper-color-selector">
-                    <button type="button" id="forest-theme-checkbox" class="color-selector">
+                    <button type="button" id="obsidian" class="color-selector">
                   </div>
                   <div class="wrapper-color-selector">
-                    <button type="button" id="ocean-theme-checkbox" class="color-selector">
+                    <button type="button" id="sunflower" class="color-selector">
                   </div>
                   <div class="wrapper-color-selector">
-                    <button type="button" id="sunflower-theme-checkbox" class="color-selector">
+                    <button type="button" id="forest" class="color-selector">
                   </div>
                   <div class="wrapper-color-selector">
-                    <button type="button" id="obsidian-theme-checkbox" class="color-selector">
+                    <button type="button" id="ocean" class="color-selector">
                   </div>
                 </div>
               </div>
           </form>
-          <button type="button" id="add-project-submit" required>Create project</button>
+          <button type="button" id="cancel-project-create" required>Cancel</button>
+          <button type="button" id="add-project-submit">Create project</button>
         </div>
       </div>
     </main>
