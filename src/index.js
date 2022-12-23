@@ -64,11 +64,14 @@ const projectsList = document.getElementById("projects-list")
 const addProjectPanel = document.querySelector(".add-project")
 const editProjectsListButton = document.getElementById("projects-edit-btn")
 
+let domProjects = []
+
 //Create project panel
 let addProjectPanelOpen = false
 const createProjectButton = document.getElementById("add-project-submit")
 const projectNameInput = document.getElementById("input-project-name")
 const projectDescriptionInput = document.getElementById("input-project-description")
+const cancelProjectAddButton = document.getElementById("cancel-project-create")
 
 let themeSelection = ""
 const themeSelectionButtons = document.querySelectorAll(".color-selector")
@@ -83,7 +86,20 @@ addProjectButton.addEventListener("click", () => {
   }
 })
 
+let editingProjects = false
 editProjectsListButton.addEventListener("click", () => {
+  editingProjects = !editingProjects
+  
+  if (editingProjects) {
+    domProjects.forEach((project) => {
+      project.style.marginLeft = "2rem"
+    })
+  }
+  else {
+    domProjects.forEach((project) => {
+      project.style.marginLeft = "0rem"
+    })
+  }
 })
 
 createProjectButton.addEventListener("click", () => {
@@ -109,6 +125,11 @@ themeSelectionButtons.forEach((button) => {
     button.classList.add("theme-selected")
     themeSelection = button.id
   })
+})
+
+cancelProjectAddButton.addEventListener("click", () => {
+  clearCreateProjectForm()
+  closeCreateProjectPanel()
 })
 
 function openCreateProjectPanel() {
@@ -176,6 +197,8 @@ function renderProjectsList() {
     const projectItem = document.createElement("div")
     projectItem.classList.add("project-list-item")
     projectItem.id = project.name + '_project'
+
+    domProjects.push(projectItem)
 
     const projectItemName = document.createElement("h3")
     projectItemName.textContent = project.name
