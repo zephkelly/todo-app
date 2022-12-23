@@ -1,5 +1,5 @@
 //import { compareAsc, format } from "date-fns"
-//import "./style.css"
+//import {} from "./style.css"
 
 const projectsList = document.getElementById("projects-list")
 const todoPanel = document.getElementById("todo-panel")
@@ -38,32 +38,9 @@ const removeProject = (project) => {
   projects.splice(projects.indexOf(project), 1)
 }
 
-const renderProjectsDOM = () => {}
-
-const renderTodosDOM = (project) => {}
-
-const renderTodoPanel = (project, todo) => {}
-
-const renderProjectPanel = (project) => {}
-
-const renderNewProjectForm = () => {}
-
-const renderNewTodoForm = (project) => {}
-
-const renderEditTodoForm = (project, todo) => {}
-
-const renderEditProjectForm = (project) => {}
-
-const renderProject = (project) => {}
-
-const renderTodo = (project, todo) => {}
-
-const render = () => {}
-
-const init = () => {}
-
 //DOM interaction
 const backgroundDarken = document.querySelector(".background-darken")
+
 //Project panel
 const addProjectButton = document.getElementById("btn-new-project")
 const projectsPanel = document.querySelector(".projects-panel")
@@ -87,6 +64,8 @@ addProjectButton.addEventListener("click", () => {
     addProjectPanel.classList.add("hidden")
   }
 })
+
+
 
 function delay(time) {
   return new Promise((resolve) => setTimeout(resolve, time))
