@@ -163,6 +163,8 @@ function addClickEventToProjects() {
 }
 
 function projectListEditMode() {
+  editingProjects = true
+
   domProjects.forEach((project) => {
     project.style.marginLeft = "2rem"
     project.firstChild.classList.remove("hidden")
@@ -170,6 +172,8 @@ function projectListEditMode() {
 }
 
 function projectListNormalMode() {
+  editingProjects = false
+
   domProjects.forEach((project) => {
     project.style.marginLeft = "0rem"
     project.firstChild.classList.add("hidden")
