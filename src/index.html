@@ -11,24 +11,91 @@
       href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <title>To.do</title>
   </head>
   <body>
+    <div class="background-darken"></div>
     <header>
       <div id="header"></div>
     </header>
     <main>
-      <div class="projects-panel">
+      <div id="projects-panel" class="projects-panel panel">
+        <div id="open-projects-panel" class="open-projects-panel panel hidden">
+          <span class="material-symbols-outlined">chevron_right</span>
+        </div>
         <div class="content">
-          <h2 id="projects-label">Your Projects</h2>
+          <span class="material-symbols-outlined projects-edit-btn" id="projects-edit-btn">more_horiz</span>
+          <h2 id="projects-label" class="label">Your Projects</h2>
           <div class="spacer"></div>
           <div class="wrapper">
             <nav>
+              <ul id="projects-list">
+
+              </ul>
               <button type="button" id="btn-new-project">+ Add New</button>
             </nav>
           </div>
         </div>
       </div>
+      <div class="add-project panel hidden">
+        <div class="content">
+          <h2 class="label">Create your new project</h2>
+          <div class="spacer"></div>
+          <div class="wrapper">
+            <form id="form-add-project">
+              <div class="form-item">
+                <label for="input-project-name">Project Name</label>
+                <input
+                  type="text"
+                  id="input-project-name"
+                  placeholder='"Game Development"'
+                  class="text-input"
+                />
+              </div>
+              <div class="form-item">
+                <label for="input-project-description">Project Description</label>
+                <input
+                  type="text"
+                  id="input-project-description"
+                  placeholder='"My really cool game idea"'
+                  class="text-input"
+                />
+              </div>
+              <div class="form-item">
+                <label for="input-project-theme">Theme</label>
+                <div class="themes">
+                  <div class="wrapper-color-selector">
+                    <button type="button" id="obsidian" class="color-selector">
+                  </div>
+                  <div class="wrapper-color-selector">
+                    <button type="button" id="sunflower" class="color-selector">
+                  </div>
+                  <div class="wrapper-color-selector">
+                    <button type="button" id="forest" class="color-selector">
+                  </div>
+                  <div class="wrapper-color-selector">
+                    <button type="button" id="ocean" class="color-selector">
+                  </div>
+                </div>
+              </div>
+          </form>
+          <button type="button" id="cancel-project-create" required>Cancel</button>
+          <button type="button" id="add-project-submit">Create project</button>
+        </div>
+      </div>
+      </div>
+      <div class="empty-project-panel panel-inverted" id="empty-project-panel">
+        <h2>Make a project to get started</h2>
+      </div>
+      <section class="hidden project-section">
+        <h2 class="project-title">Project</h2>
+      </section>
     </main>
+    <footer>
+      <script src="index.js"></script>
+    </footer>
   </body>
 </html>
