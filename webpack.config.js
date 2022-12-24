@@ -1,7 +1,7 @@
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 
-
+//  git add dist && git commit -m "Initial dist subtree commit"
 //  git subtree push --prefix dist origin gh-pages
 module.exports = {
   entry: "./src/index.js",
