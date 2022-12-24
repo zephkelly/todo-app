@@ -23,10 +23,6 @@
   z-index: 1;
 }
 
-.hidden {
-  display: none;
-}
-
 body {
   margin: 0;
   height: 100vh;
@@ -92,14 +88,44 @@ main {
 
 .projects-panel {
   position: relative;
-  left: 5rem;
+  left: clamp(2rem, 5vw, 5rem);
+  transition: left 0.2s ease-in-out;
   top: 5rem;
   height: 50vh;
   min-height: 26rem;
-  min-width: 23rem;
-  width: 20%;
+  min-width: 18rem;
+  width: 20vw;
   z-index: 0;
 }
+
+  .open-projects-panel {
+    position: fixed;
+    left: 0;
+    top: 12rem;
+    height: 4em;
+    width: 1.5rem;
+    border-bottom-left-radius: 0rem;
+    border-top-left-radius: 0rem;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .open-projects-panel:hover {
+    cursor: pointer;
+    width: 2.5rem;
+    height: 4.5rem;
+  }
+
+  .open-projects-panel span {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  .projects-panel-slideout {
+    left: -25rem;
+  }
 
 .add-project {
   position: fixed;
@@ -274,6 +300,18 @@ main {
     cursor: pointer;
   }
 
+  .project-list-item .delete-project {
+    height: 1rem;
+    width: 1rem;
+    position: relative;
+    left: -2rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+  }
+
     #projects-list h3 {
       font-size: 1rem;
       font-weight: 500;
@@ -358,7 +396,7 @@ main {
   min-width: 14rem;
 }
 
-.material-symbols-outlined {
+.projects-panel .content .projects-edit-btn {
   position: absolute;
   right: 1.6rem;
   top: 2.6rem;
@@ -371,7 +409,7 @@ main {
   user-select: none;
 }
 
-  .material-symbols-outlined:hover {
+  .projects-panel .content .projects-edit-btn:hover {
     cursor: pointer;
     opacity: 1;
     font-size: 1.8rem;
@@ -398,6 +436,32 @@ main {
     margin-bottom: 8rem;
   }
 
+.project-section {
+  position: absolute;
+  left: clamp(2rem, 5vw, 5rem);
+  transition: left 0.2s ease-in-out;
+  right: 5rem;
+  top: 5.5rem;
+  padding-top: 3.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+  .project-section-slideright {
+
+    left: clamp(22rem, 50vw, 32rem);
+  }
+
+  .project-section * {
+    font-family: "Ubuntu", sans-serif;
+  }
+
+  .project-section h2 {
+    font-size: 3rem;
+    font-weight: 400;
+    margin: 0rem;
+  }
+
 @media (max-width: 1450px) {
   #form-add-project .form-item:last-child {
     flex-direction: column;
@@ -408,4 +472,8 @@ main {
   #form-add-project .themes {
     margin-left: 0rem;
   }
+}
+
+.hidden {
+  display: none !important;
 }
