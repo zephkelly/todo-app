@@ -1,6 +1,8 @@
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 
+
+//  git subtree push --prefix dist origin gh-pages
 module.exports = {
   entry: "./src/index.js",
   output: {
@@ -11,7 +13,7 @@ module.exports = {
   module: {
     rules: [
       {
-        //npm install --save-dev style-loader css-loader
+        //  npm install --save-dev style-loader css-loader
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
       },
