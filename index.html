@@ -12,6 +12,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <title>To.do</title>
   </head>
   <body>
@@ -20,9 +22,12 @@
       <div id="header"></div>
     </header>
     <main>
-      <div class="projects-panel panel">
+      <div id="projects-panel" class="projects-panel panel">
+        <div id="open-projects-panel" class="open-projects-panel panel hidden">
+          <span class="material-symbols-outlined">chevron_right</span>
+        </div>
         <div class="content">
-          <span class="material-symbols-outlined" id="projects-edit-btn">more_horiz</span>
+          <span class="material-symbols-outlined projects-edit-btn" id="projects-edit-btn">more_horiz</span>
           <h2 id="projects-label" class="label">Your Projects</h2>
           <div class="spacer"></div>
           <div class="wrapper">
@@ -85,6 +90,9 @@
       <div class="empty-project-panel panel-inverted" id="empty-project-panel">
         <h2>Make a project to get started</h2>
       </div>
+      <section class="hidden project-section">
+        <h2 class="project-title">Project</h2>
+      </section>
     </main>
     <footer>
       <script src="index.js"></script>

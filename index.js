@@ -47,8 +47,10 @@ const removeTodo = (project, todo) => {
   project.todos.splice(project.todos.indexOf(todo), 1)
 }
 
-const removeProject = (project) => {
+const removeProject = (project, domProject) => {
   projects.splice(projects.indexOf(project), 1)
+
+  domProjects.splice(domProjects.indexOf(domProject), 1)
 }
 
 //DOM interaction
@@ -70,10 +72,13 @@ const sunflowerThemeHex = '#f7b731'
 const addProjectButton = document.getElementById("btn-new-project")
 const projectsPanel = document.querySelector(".projects-panel")
 const projectsList = document.getElementById("projects-list")
+const openProjectsPanelButton = document.getElementById("open-projects-panel")
 const addProjectPanel = document.querySelector(".add-project")
 const editProjectsListButton = document.getElementById("projects-edit-btn")
 
-let domProjects = []
+const projectSection = document.querySelector(".project-section")
+
+let domProjects = [] //DOM representation of projects
 
 //Create project panel
 let addProjectPanelOpen = false
@@ -85,8 +90,12 @@ const cancelProjectAddButton = document.getElementById("cancel-project-create")
 let themeSelection = ""
 const themeSelectionButtons = document.querySelectorAll(".color-selector")
 
+let editingProjects = false
+
 addProjectButton.addEventListener("click", () => {
   clearCreateProjectForm()
+
+  if (editingProjects) projectListNormalMode()
 
   if (addProjectPanelOpen) {
     closeCreateProjectPanel()
@@ -95,15 +104,16 @@ addProjectButton.addEventListener("click", () => {
   }
 })
 
-let editingProjects = false
 editProjectsListButton.addEventListener("click", () => {
   editingProjects = !editingProjects
   
   domProjects.forEach((project) => {
     if (editingProjects) {
       project.style.marginLeft = "2rem"
+      project.firstChild.classList.remove("hidden")
     } else {
       project.style.marginLeft = "0rem"
+      project.firstChild.classList.add("hidden")
     } 
   })
 })
@@ -134,10 +144,61 @@ themeSelectionButtons.forEach((button) => {
   })
 })
 
+function addClickEventToProjects() {
+  domProjects.forEach((project) => {
+    project.addEventListener("click", () => {
+      const projectName = project.id.split('_')[0]
+      const selectedProject = projects.find((project) => project.name === projectName)
+
+      if (editingProjects) {
+        removeProject(selectedProject, project)
+        renderProjectsList()
+        projectListEditMode()
+        addClickEventToProjects()
+      } else {
+        openProject(selectedProject)
+      }
+    })
+  })
+}
+
+function projectListEditMode() {
+  domProjects.forEach((project) => {
+    project.style.marginLeft = "2rem"
+    project.firstChild.classList.remove("hidden")
+  })
+}
+
+function projectListNormalMode() {
+  domProjects.forEach((project) => {
+    project.style.marginLeft = "0rem"
+    project.firstChild.classList.add("hidden")
+  })
+}
+
 cancelProjectAddButton.addEventListener("click", () => {
   clearCreateProjectForm()
   closeCreateProjectPanel()
 })
+
+openProjectsPanelButton.addEventListener("click", () => {
+  openProjectsPanel()
+})
+
+
+function openProjectsPanel() {
+  projectsPanel.classList.remove("projects-panel-slideout")
+  openProjectsPanelButton.classList.add("hidden")
+
+  projectSection.classList.add('project-section-slideright')
+}
+
+function collapseProjectsPanel() {
+  projectsPanel.classList.add("projects-panel-slideout")
+  openProjectsPanelButton.classList.remove("hidden")
+
+  projectSection.classList.remove('project-section-slideright')
+}
 
 function openCreateProjectPanel() {
   addProjectPanelOpen = true
@@ -205,29 +266,24 @@ function renderProjectsList() {
     projectItem.classList.add("project-list-item")
     projectItem.id = project.name + '_project'
 
-    domProjects.push(projectItem)
+    const projectDeleteIcon = document.createElement("span")
+    projectDeleteIcon.classList.add("material-symbols-outlined")
+    projectDeleteIcon.classList.add('delete-project')
+    projectDeleteIcon.classList.add('hidden')
+    projectDeleteIcon.textContent = "delete"
 
     const projectItemName = document.createElement("h3")
     projectItemName.textContent = project.name
-
+    
     const projectItemDescription = document.createElement("p")
     projectItemDescription.textContent = project.description
+        
+    domProjects.push(projectItem)
 
+    projectItem.appendChild(projectDeleteIcon)
     projectItem.appendChild(projectItemName)
     projectItem.appendChild(projectItemDescription)
     projectsList.appendChild(projectItem)
-  })
-}
-
-function addClickEventToProjects() {
-  domProjects.forEach((project) => {
-    project.addEventListener("click", () => {
-      const projectName = project.id.split('_')[0]
-      const selectedProject = projects.find((project) => project.name === projectName)
-
-      
-      openProject(selectedProject)
-    })
   })
 }
 
@@ -246,8 +302,15 @@ function setThemeColor(theme) {
 
 function openProject(project) {
   document.documentElement.style.setProperty('--accent-color', setThemeColor(project.getTheme()));
-  document.getElementById('empty-project-panel').classList.remove('panel-inverted')
-  document.getElementById('empty-project-panel').classList.add('panel')
+  document.getElementById('empty-project-panel').classList.add('hidden')
+
+  delay(100).then(() => {
+    collapseProjectsPanel()
+  })
+
+  delay(400).then(() => {
+    projectSection.classList.remove("hidden")
+  })
 }
 //Project panel ----------------------------------------------------------------
 
