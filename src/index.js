@@ -49,7 +49,6 @@ const removeTodo = (project, todo) => {
 
 const removeProject = (project, domProject) => {
   projects.splice(projects.indexOf(project), 1)
-
   domProjects.splice(domProjects.indexOf(domProject), 1)
 }
 
@@ -193,17 +192,22 @@ openProjectsPanelButton.addEventListener("click", () => {
 
 
 function openProjectsPanel() {
-  projectsPanel.classList.remove("projects-panel-slideout")
+  projectSection.classList.add('project-section-slideright')
   openProjectsPanelButton.classList.add("hidden")
 
-  projectSection.classList.add('project-section-slideright')
+  delay(200).then(() => {
+    projectsPanel.classList.remove("projects-panel-slideout")
+    
+  })
 }
 
 function collapseProjectsPanel() {
   projectsPanel.classList.add("projects-panel-slideout")
   openProjectsPanelButton.classList.remove("hidden")
 
-  projectSection.classList.remove('project-section-slideright')
+  delay(100).then(() => {
+    projectSection.classList.remove('project-section-slideright')
+  })
 }
 
 function openCreateProjectPanel() {
