@@ -44,7 +44,7 @@ main {
 
 #header {
   width: 100%;
-  height: 8vh;
+  height: 8rem;
   min-height: 4rem;
 }
 
@@ -89,11 +89,10 @@ main {
 .projects-panel {
   position: relative;
   left: clamp(2rem, 5vw, 5rem);
-  transition: left 0.2s ease-in-out;
   top: 5rem;
-  height: 50vh;
+  height: fit-content;
   min-height: 26rem;
-  min-width: 18rem;
+  min-width: 20rem;
   width: 20vw;
   z-index: 0;
 }
@@ -104,6 +103,8 @@ main {
     top: 12rem;
     height: 4em;
     width: 1.5rem;
+    transition: height 0.2s ease-in-out;
+    transition: width 0.1s ease-in-out;
     border-bottom-left-radius: 0rem;
     border-top-left-radius: 0rem;
     z-index: 1;
@@ -124,12 +125,13 @@ main {
   }
 
   .projects-panel-slideout {
+    transition: left 0.2s ease-in-out;
     left: -25rem;
   }
 
 .add-project {
   position: fixed;
-  left: 34rem;
+  left: clamp(24rem, 36vw, 34rem);
   top: 9.5rem;
   height: 50vh;
   min-height: 26rem;
@@ -348,6 +350,7 @@ main {
   height: 2rem;
   width: 8rem;
   padding: 0;
+  padding-top: 1rem;
 }
 
   #btn-new-project:hover {
@@ -417,12 +420,14 @@ main {
   }
 
   .empty-project-panel {
-    width: 68vw;
-    min-width: 80rem;
-    height: 40rem;
     position: relative;
+    z-index: 0;
     top: 5rem;
-    left: 10rem;
+    left: clamp(4rem, 8vw, 10rem);
+    right: 5rem;
+    bottom: 10rem;
+    min-width: 67vw;
+    height: 78vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -440,6 +445,7 @@ main {
   position: absolute;
   left: clamp(2rem, 5vw, 5rem);
   transition: left 0.2s ease-in-out;
+  transition: top 0.2s ease-in-out;
   right: 5rem;
   top: 5.5rem;
   padding-top: 3.5rem;
@@ -448,8 +454,7 @@ main {
 }
 
   .project-section-slideright {
-
-    left: clamp(22rem, 50vw, 32rem);
+    left: clamp(22rem, 50vw, 34rem);
   }
 
   .project-section * {
@@ -462,6 +467,25 @@ main {
     margin: 0rem;
   }
 
+@media (max-width: 3840px) {
+  .add-project {
+    max-height: 40rem;
+    max-width: 60rem;
+    top: 13rem;
+    left: clamp(13rem, 30vw, 58rem); 
+  }
+}
+
+@media (max-width: 1920px) {
+  .add-project {
+    max-height: 40rem;
+    max-width: 60rem;
+    top: 13rem;
+    left: clamp(24rem, 34vw, 34rem);
+    width: 50vw;
+  }
+}
+
 @media (max-width: 1450px) {
   #form-add-project .form-item:last-child {
     flex-direction: column;
@@ -471,6 +495,53 @@ main {
 
   #form-add-project .themes {
     margin-left: 0rem;
+  }
+}
+
+@media (max-width: 1280px) {
+  .add-project {
+    top: 13rem;
+    left: clamp(24rem, 39vw, 34rem);
+    width: 55.5vw;
+  }
+}
+
+@media (max-width: 1000px) {
+  .add-project {
+    top: 13rem;
+    left: clamp(26.2rem, 35vw, 34rem);
+    width: 52vw;
+  }
+}
+
+@media (max-width: 480px) {
+  #header {
+    height: 2rem;
+  }
+
+  .projects-panel {
+    top: 6rem;
+    left: 8.2vw;
+    min-width: 83.8vw;
+  }
+  
+  .add-project {
+    top: 13rem;
+    left: clamp(33rem, 35vw, 34rem);
+    width: 52.4vw;
+  }
+
+  .empty-project-panel {
+    display: none;
+  }
+}
+
+/*Smallest supported screen size*/
+@media (max-width: 320px) {
+  .add-project {
+    top: 13rem;
+    left: clamp(26.2rem, 35vw, 34rem);
+    width: 52vw;
   }
 }
 

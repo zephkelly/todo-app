@@ -63,13 +63,13 @@ backgroundDarken.addEventListener("click", () => {
   }
 })
 
-//Project panel ----------------------------------------------------------------
+//Projects list/create panel ----------------------------------------------------------------
 const obsidianThemeHex = '#7209b7'
 const forestThemeHex = '#0f9960'
 const oceanThemeHex = '#3a86ff'
 const sunflowerThemeHex = '#f7b731'
 
-const addProjectButton = document.getElementById("btn-new-project")
+const createProjectPanel = document.getElementById("btn-new-project")
 const projectsPanel = document.querySelector(".projects-panel")
 const projectsList = document.getElementById("projects-list")
 const openProjectsPanelButton = document.getElementById("open-projects-panel")
@@ -81,7 +81,6 @@ const projectSection = document.querySelector(".project-section")
 let domProjects = [] //DOM representation of projects
 
 //Create project panel
-let addProjectPanelOpen = false
 const createProjectButton = document.getElementById("add-project-submit")
 const projectNameInput = document.getElementById("input-project-name")
 const projectDescriptionInput = document.getElementById("input-project-description")
@@ -90,9 +89,10 @@ const cancelProjectAddButton = document.getElementById("cancel-project-create")
 let themeSelection = ""
 const themeSelectionButtons = document.querySelectorAll(".color-selector")
 
+let addProjectPanelOpen = false
 let editingProjects = false
 
-addProjectButton.addEventListener("click", () => {
+createProjectPanel.addEventListener("click", () => {
   clearCreateProjectForm()
 
   if (editingProjects) projectListNormalMode()
@@ -106,6 +106,8 @@ addProjectButton.addEventListener("click", () => {
 
 editProjectsListButton.addEventListener("click", () => {
   editingProjects = !editingProjects
+
+  if (addProjectPanelOpen) closeCreateProjectPanel()
   
   domProjects.forEach((project) => {
     if (editingProjects) {
@@ -316,7 +318,14 @@ function openProject(project) {
     projectSection.classList.remove("hidden")
   })
 }
-//Project panel ----------------------------------------------------------------
+//Projects list/create panel ----------------------------------------------------------------
+
+
+//Project section ---------------------------------------------------------------------------
+//const projectSection = document.querySelector(".project-section") ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+//Project section ---------------------------------------------------------------------------
 
 function delay(time) {
   return new Promise((resolve) => setTimeout(resolve, time))
