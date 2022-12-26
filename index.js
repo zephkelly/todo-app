@@ -76,6 +76,8 @@ const addProjectPanel = document.querySelector(".add-project")
 const editProjectsListButton = document.getElementById("projects-edit-btn")
 
 const projectSection = document.querySelector(".project-section")
+const projectContentBox = document.getElementById('project-content')
+const upcomingTasksPanel = document.querySelector(".project-task-upcoming")
 
 let domProjects = [] //DOM representation of projects
 
@@ -197,6 +199,9 @@ openProjectsPanelButton.addEventListener("click", () => {
 
 function openProjectsPanel() {
   projectSection.classList.add('project-section-slideright')
+  projectContentBox.style.gridTemplateColumns = "1.5fr 2fr"
+  upcomingTasksPanel.classList.add("hidden")
+
   openProjectsPanelButton.innerHTML = '<span class="material-symbols-outlined">chevron_left</span>'
 
   projectsPanelOpen = true
@@ -207,8 +212,11 @@ function openProjectsPanel() {
 }
 
 function collapseProjectsPanel() {
-  projectsPanel.classList.add("projects-panel-slideout")
   openProjectsPanelButton.classList.remove("hidden")
+  projectsPanel.classList.add("projects-panel-slideout")
+  projectContentBox.style.gridTemplateColumns = "1.5fr 2fr 0.8fr"
+  upcomingTasksPanel.classList.remove("hidden")
+
   openProjectsPanelButton.innerHTML = '<span class="material-symbols-outlined">chevron_right</span>'
 
   projectsPanelOpen = false
