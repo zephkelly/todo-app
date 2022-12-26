@@ -4,32 +4,50 @@
 const projects = []
 
 class Project {
-  constructor(name, description, theme = []) {
+  constructor(name, description, theme = '') {
     this.name = name
     this.description = description
     this.theme = theme
-    this.todos = []
+    this.tasks = []
   }
 
   getTheme() {
     return this.theme.toString()
   }
 
-  addTodo(newTodo) {
-    this.todos.push(newTodo)
+  addTask(newTodo) {
+    this.tasks.push(newTodo)
   }
 
-  getTodos() {
-    return this.todos
+  removeTask(todo) {
+    this.tasks.splice(this.tasks.indexOf(todo), 1)
+  }
+
+  getTasks() {
+    return this.tasks
   }
 }
 
-class Todo {
-  constructor(title, description, dueDate, priority) {
-    this.title = title
-    this.description = description
-    this.dueDate = dueDate
-    this.priority = priority
+class Task {
+  constructor(text, dueDate = '', priority = '') {
+    this.text = text
+    this.completed = false
+  }
+
+  getTitle() {
+    return this.title
+  }
+
+  getText() {
+    return this.description
+  }
+
+  getCompleted() {
+    return this.completed
+  }
+
+  toggleCompleted() {
+    this.completed = !this.completed
   }
 }
 
@@ -39,12 +57,12 @@ const addProject = (project) => {
   projects.push(project)
 }
 
-const addTodo = (project, todo) => {
-  project.todos.push(todo)
+const addTask = (project, todo) => {
+  project.addTask(todo)
 }
 
 const removeTodo = (project, todo) => {
-  project.todos.splice(project.todos.indexOf(todo), 1)
+  project.removeTask(todo)
 }
 
 const removeProject = (project, domProject) => {
@@ -252,7 +270,7 @@ function createNewProject(name, description, theme) {
 }
 
 function validateNewProjectInput(projectName, projectDescription, theme) {
-  if (projectName === "") {
+  if (projectName == "") {
     alert("Please enter a project name")
     return false
   }
@@ -264,7 +282,7 @@ function validateNewProjectInput(projectName, projectDescription, theme) {
     alert("Project description too long")
     return false
   }
-  else if (theme === "") {
+  else if (theme == "") {
     alert("Please select a theme")
     return false
   }
@@ -327,8 +345,14 @@ function setThemeColor(theme) {
 }
 
 function openProject(project) {
+  if (addProjectPanelOpen) {
+    closeCreateProjectPanel()
+  }
+
   document.documentElement.style.setProperty('--accent-color', setThemeColor(project.getTheme()));
   document.getElementById('empty-project-panel').classList.add('hidden')
+
+  setupProjectSection(project)
 
   delay(100).then(() => {
     collapseProjectsPanel()
@@ -338,22 +362,128 @@ function openProject(project) {
     projectSection.classList.remove("hidden")
   })
 }
-//Projects list/create panel ----------------------------------------------------------------
+//-------------------------------------------------------------------------------------------
 
 
 //Project section ---------------------------------------------------------------------------
 //const projectSection = document.querySelector(".project-section") ^^^^^^^^^^^^^^^^^^^^^^^^^
+const projectTaskArticle = document.querySelector(".project-task-list")
+const projectTasksList = document.getElementById('tasks-list')
+const addTaskButton = document.getElementById('project-add-task-btn')
 
+let currentProject = null
 
-//Project section ---------------------------------------------------------------------------
+let domTasks = []
+let creatingTask = false
+
+addTaskButton.addEventListener("click", () => {
+  if (!creatingTask) {
+    createNewTask()
+    addTaskButton.classList.add("hidden")
+  } else {}
+})
+
+function setupProjectSection(project) {
+  currentProject = project
+
+  const projectTitle = document.querySelector('.project-title')
+  const projectDescription = document.querySelector('.project-description')
+
+  projectTitle.textContent = project.name
+  projectDescription.textContent = project.description
+
+  domTasks.length = 0
+  populateProjectTasksList(project)
+}
+
+function populateProjectTasksList(project) {
+  const tasks = project.getTasks()
+  
+  tasks.forEach((task) => {
+    createDOMTask(task)
+  })
+}
+
+function createDOMTask(task) {
+  const taskListItem = document.createElement("li")
+
+  const taskCompletedButton = document.createElement("span")
+  taskCompletedButton.innerHTML = '<span class="material-symbols-outlined">radio_button_unchecked</span>'
+
+  taskCompletedButton.addEventListener("click", () => {
+    task.toggleCompleted()
+    taskCompletedButton.innerHTML = task.getCompleted() ? '<span class="material-symbols-outlined">check_circle</span>' : '<span class="material-symbols-outlined">radio_button_unchecked</span>'
+  })
+
+  const taskText = document.createElement("p")
+  taskText.textContent = task.text
+
+  taskListItem.appendChild(taskCompletedButton)
+  taskListItem.appendChild(taskText)
+  projectTasksList.appendChild(taskListItem)
+
+  addTaskToDOMArray(taskListItem)
+}
+
+function addTaskToDOMArray(task) {
+  domTasks.push(task)
+}
+
+function removeTaskFromDOMArray(task) {
+  domTasks.splice(domTasks.indexOf(task), 1)
+}
+
+function createNewTask() {
+  creatingTask = true
+
+  const taskListItem = document.createElement("li")
+  taskListItem.classList.add("new-task")
+
+  const taskCompletedButton = document.createElement("span")
+  taskCompletedButton.innerHTML = '<span class="material-symbols-outlined">radio_button_unchecked</span>'
+
+  const taskTextInput = document.createElement("textarea")
+  taskTextInput.placeholder = "Enter task name"
+  taskTextInput.classList.add("new-task-input")
+  taskTextInput.focus()
+
+  taskListItem.appendChild(taskCompletedButton)
+  taskListItem.appendChild(taskTextInput)
+  projectTasksList.appendChild(taskListItem)
+
+  
+  taskTextInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      appendNewTask(taskListItem, taskTextInput.value)
+    }
+  })
+
+  taskTextInput.addEventListener("focusout", () => {
+    appendNewTask(taskListItem, taskTextInput.value)
+  })
+}
+
+function appendNewTask(task, taskText) {
+  const newTask = new Task(taskText)
+
+  if (taskText == "") {
+    //do nothing
+    task.remove()
+  } else {
+    createDOMTask(newTask)
+    currentProject.addTask(newTask)
+  }
+
+  task.remove()
+  creatingTask = false
+  addTaskButton.classList.remove("hidden")
+}
+//------------------------------------------------------------------------------------
 
 function delay(time) {
   return new Promise((resolve) => setTimeout(resolve, time))
 }
 
 window.onload = () => {
-  //get projects
-  //render projects list
-
   editProjectsListButton.style.display = "none"
 }
