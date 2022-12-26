@@ -186,24 +186,32 @@ cancelProjectAddButton.addEventListener("click", () => {
   closeCreateProjectPanel()
 })
 
+let projectsPanelOpen = true
 openProjectsPanelButton.addEventListener("click", () => {
-  openProjectsPanel()
+  if (projectsPanelOpen) {
+    collapseProjectsPanel()
+  } else {
+    openProjectsPanel()
+  }
 })
-
 
 function openProjectsPanel() {
   projectSection.classList.add('project-section-slideright')
-  openProjectsPanelButton.classList.add("hidden")
+  openProjectsPanelButton.innerHTML = '<span class="material-symbols-outlined">chevron_left</span>'
+
+  projectsPanelOpen = true
 
   delay(200).then(() => {
     projectsPanel.classList.remove("projects-panel-slideout")
-    
   })
 }
 
 function collapseProjectsPanel() {
   projectsPanel.classList.add("projects-panel-slideout")
   openProjectsPanelButton.classList.remove("hidden")
+  openProjectsPanelButton.innerHTML = '<span class="material-symbols-outlined">chevron_right</span>'
+
+  projectsPanelOpen = false
 
   delay(100).then(() => {
     projectSection.classList.remove('project-section-slideright')
