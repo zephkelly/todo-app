@@ -4,11 +4,11 @@
 const projects = []
 
 class Project {
-  constructor(name, description, theme = '') {
+  constructor(name, description, theme = '', tasks = []) {
     this.name = name
     this.description = description
     this.theme = theme
-    this.tasks = []
+    this.tasks = tasks
   }
 
   getTheme() {
@@ -55,19 +55,38 @@ const todoPanel = document.getElementById("todo-panel")
 
 const addProject = (project) => {
   projects.push(project)
+
+  localStorage.setItem("projects", JSON.stringify(projects))
 }
 
-const addTask = (project, todo) => {
-  project.addTask(todo)
+const addTask = (project, task) => {
+  project.addTask(task)
+
+  localStorage.setItem("projects", JSON.stringify(projects))
 }
 
-const removeTodo = (project, todo) => {
-  project.removeTask(todo)
+const removeTask = (project, task) => {
+  project.removeTask(task)
+
+  localStorage.setItem("projects", JSON.stringify(parsedProjects))
 }
 
 const removeProject = (project, domProject) => {
   projects.splice(projects.indexOf(project), 1)
+
+  domProjects[domProjects.indexOf(domProject)].remove()
   domProjects.splice(domProjects.indexOf(domProject), 1)
+
+  localStorage.setItem("projects", JSON.stringify(projects))
+
+  
+  if (projects.length == 0) {
+    clearLastProject()
+    emptyProjectSection.classList.remove("hidden")
+    projectSection.classList.add("hidden")
+  } else if (project.name = currentProject.name) {
+    clearLastProject()
+  }
 }
 
 //DOM interaction
@@ -93,6 +112,7 @@ const openProjectsPanelButton = document.getElementById("open-projects-panel")
 const addProjectPanel = document.querySelector(".add-project")
 const editProjectsListButton = document.getElementById("projects-edit-btn")
 
+const emptyProjectSection = document.getElementById('empty-project-panel')
 const projectSection = document.querySelector(".project-section")
 const projectContentBox = document.getElementById('project-content')
 const upcomingTasksPanel = document.querySelector(".project-task-upcoming")
@@ -152,7 +172,6 @@ createProjectButton.addEventListener("click", () => {
   closeCreateProjectPanel()
 
   renderProjectsList()
-  addClickEventToProjects()
 })
 
 themeSelectionButtons.forEach((button) => {
@@ -165,21 +184,25 @@ themeSelectionButtons.forEach((button) => {
   })
 })
 
-function addClickEventToProjects() {
-  domProjects.forEach((project) => {
-    project.addEventListener("click", () => {
-      const projectName = project.id.split('_')[0]
-      const selectedProject = projects.find((project) => project.name === projectName)
+function createNewProject(name, description, theme) {
+  const newProject = new Project(name, description, theme)
+  addProject(newProject)
 
-      if (editingProjects) {
-        removeProject(selectedProject, project)
-        renderProjectsList()
-        projectListEditMode()
-        addClickEventToProjects()
-      } else {
-        openProject(selectedProject)
-      }
-    })
+  localStorage.setItem("projects", JSON.stringify(projects))
+  localStorage.setItem(newProject.name, JSON.stringify(newProject))
+}
+
+function addClickEventToProject(project) {
+  project.addEventListener("click", () => {
+    const projectName = project.id.split('_')[0]
+    const selectedProject = projects.find((project) => project.name === projectName)
+
+    if (editingProjects) {
+      removeProject(selectedProject, project)
+      projectListEditMode()
+    } else {
+      openProject(selectedProject)
+    }
   })
 }
 
@@ -232,7 +255,7 @@ function openProjectsPanel() {
 function collapseProjectsPanel() {
   openProjectsPanelButton.classList.remove("hidden")
   projectsPanel.classList.add("projects-panel-slideout")
-  projectContentBox.style.gridTemplateColumns = "1.5fr 2fr 0.8fr"
+  projectContentBox.style = ""
   upcomingTasksPanel.classList.remove("hidden")
 
   openProjectsPanelButton.innerHTML = '<span class="material-symbols-outlined">chevron_right</span>'
@@ -264,10 +287,6 @@ function closeCreateProjectPanel() {
   addProjectPanel.classList.add("hidden")
 }
 
-function createNewProject(name, description, theme) {
-  const newProject = new Project(name, description, theme)
-  addProject(newProject)
-}
 
 function validateNewProjectInput(projectName, projectDescription, theme) {
   if (projectName == "") {
@@ -328,6 +347,8 @@ function renderProjectsList() {
     projectItem.appendChild(projectItemName)
     projectItem.appendChild(projectItemDescription)
     projectsList.appendChild(projectItem)
+
+    addClickEventToProject(projectItem)
   })
 }
 
@@ -350,7 +371,7 @@ function openProject(project) {
   }
 
   document.documentElement.style.setProperty('--accent-color', setThemeColor(project.getTheme()));
-  document.getElementById('empty-project-panel').classList.add('hidden')
+  emptyProjectSection.classList.add('hidden')
 
   setupProjectSection(project)
 
@@ -366,10 +387,12 @@ function openProject(project) {
 
 
 //Project section ---------------------------------------------------------------------------
-//const projectSection = document.querySelector(".project-section") ^^^^^^^^^^^^^^^^^^^^^^^^^
 const projectTaskArticle = document.querySelector(".project-task-list")
 const projectTasksList = document.getElementById('tasks-list')
 const addTaskButton = document.getElementById('project-add-task-btn')
+
+const projectTitle = document.querySelector('.project-title')
+const projectDescription = document.querySelector('.project-description')
 
 let currentProject = null
 
@@ -384,22 +407,25 @@ addTaskButton.addEventListener("click", () => {
 })
 
 function setupProjectSection(project) {
+  clearLastProject()
   currentProject = project
-
-  const projectTitle = document.querySelector('.project-title')
-  const projectDescription = document.querySelector('.project-description')
 
   projectTitle.textContent = project.name
   projectDescription.textContent = project.description
 
-  domTasks.length = 0
   populateProjectTasksList(project)
 }
 
+function clearLastProject() {
+  domTasks.length = 0
+  projectTasksList.innerHTML = ""
+
+  projectTitle.textContent = ""
+  projectDescription.textContent = ""
+}
+
 function populateProjectTasksList(project) {
-  const tasks = project.getTasks()
-  
-  tasks.forEach((task) => {
+  project.tasks.forEach((task) => {
     createDOMTask(task)
   })
 }
@@ -445,13 +471,14 @@ function createNewTask() {
   const taskTextInput = document.createElement("textarea")
   taskTextInput.placeholder = "Enter task name"
   taskTextInput.classList.add("new-task-input")
-  taskTextInput.focus()
 
   taskListItem.appendChild(taskCompletedButton)
   taskListItem.appendChild(taskTextInput)
   projectTasksList.appendChild(taskListItem)
 
-  
+  taskTextInput.focus()
+  taskTextInput.select()
+
   taskTextInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       appendNewTask(taskListItem, taskTextInput.value)
@@ -472,6 +499,8 @@ function appendNewTask(task, taskText) {
   } else {
     createDOMTask(newTask)
     currentProject.addTask(newTask)
+
+    localStorage.setItem("projects", JSON.stringify(projects))
   }
 
   task.remove()
@@ -485,5 +514,19 @@ function delay(time) {
 }
 
 window.onload = () => {
-  editProjectsListButton.style.display = "none"
+  if (localStorage.getItem("projects") == null) {
+    editProjectsListButton.style.display = "none"
+  } else {
+    editProjectsListButton.style.display = "block"
+
+    const storedProjects = localStorage.getItem("projects")
+    const parsedProjects = JSON.parse(storedProjects)
+
+    parsedProjects.forEach((project) => {
+      const newProject = new Project(project.name, project.description, project.theme, project.tasks)
+      addProject(newProject)
+    })
+
+    renderProjectsList()
+  }
 }
